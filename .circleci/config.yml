@@ -1,0 +1,119 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2.1
+executors:
+  vm-executor:
+    machine:
+      enabled: true
+      image: ubuntu-1604:201903-01
+    working_directory: ~/repo
+    environment:
+      shell: /bin/bash
+      TERM: xterm
+      TZ: "Europe/Berlin"
+  docker-executor:
+    docker:
+      - image: circleci/node:8.0
+    working_directory: ~/repo
+    environment:
+      shell: /bin/bash
+      TERM: xterm
+commands:
+  setup-build-environment:
+    description: "Setup build Environment"
+    steps:
+      - run:
+          name: Setup build environment
+          command: |
+            cd platform-launcher/platform-setup
+            sudo ./setup-ubuntu16.04.sh
+  checkout-e2e:
+    description: "Checkout E2E test"
+    parameters:
+      oisp-tag:
+        type: string
+    steps:
+      - run:
+          name: Checkout E2E test with tag << parameters.oisp-tag >>
+          shell: /bin/bash
+          command: |
+            git clone https://github.com/${CIRCLE_PROJECT_USERNAME}/platform-launcher.git
+            cd platform-launcher
+            git checkout << parameters.oisp-tag >>
+            git submodule init
+            git submodule update
+  pull-images:
+    description: "Pull all images"
+    parameters:
+      oisp-tag:
+        type: string
+    steps:
+      - run:
+          name: Pull all images
+          shell: /bin/bash
+          command: |
+            cd platform-launcher
+            docker login  -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+            export DOCKER_TAG="<< parameters.oisp-tag"
+            yes | make pull
+  e2e-test:
+    description: "Wait for platform to become ready"
+    steps:
+      - run:
+          name: Wait for platform to become ready
+          shell: /bin/bash
+          command: |
+            export NVM_DIR="/opt/circleci/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm install v8.16.0
+            nvm alias default v8.16.0
+            export DOCKER_TAG="latest"
+            cd platform-launcher
+            make test # TODO: needed to ensure that the platform is ready. Should be replaced by something lightweight
+jobs:
+  e2e-test:
+    executor: vm-executor
+    steps:
+      - checkout-e2e:
+          oisp-tag: "v1.0.5-beta2"
+      - checkout
+      - setup-build-environment
+      - pull-images-and-build-only-testbranch:
+          container: "frontend"
+      - e2e-test
+  build-check:
+    executor: docker-executor
+    steps:
+      - checkout
+      - run:        
+          name: Check whether most recent commit is signedoff
+          shell: /bin/bash
+          command: |
+            MESSAGE=`git log -1 --pretty=%B`
+            echo "Checking whether signed"
+            if [[ "${MESSAGE}" == *Signed-off-by:*@* ]]; then
+              echo "Commit is signedoff"
+            else
+              echo "Commit is not signedoff"
+              exit 1
+            fi
+      - run:
+          shell: /bin/bash
+          name: Install dependencies
+          command: |
+            npm install --only=dev
+      - run:
+          shell: /bin/bash
+          name: Run linting and tests
+          command: |
+            node_modules/grunt-cli/bin/grunt
+workflows:
+  version: 2.1
+  workflow:
+    jobs:
+      - build-check
+      - e2e-test:
+          requires:
+            - build-check
