@@ -1,6 +1,6 @@
 #!/bin/bash
 # Author: Marcel Wagner
-# Brief: This script is doing setup tasks and start the agent
+# Brief: This script is main entrypoint for the Container
 
 
 ./onboard.sh
