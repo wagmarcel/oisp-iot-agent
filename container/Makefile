@@ -21,7 +21,6 @@ stop:
 
 clean:
 	@$(call msg,"Cleaning ...");
-	@/bin/bash -c "docker rm ${CONTAINER_NAME}"
 	@/bin/bash -c "docker rmi ${IMAGE_NAME}"
 
 #----------------------------------------------------------------------------------------------------------------------

@@ -14,7 +14,7 @@ start:
 	@$(call msg,"Starting oisp-agent container...");
 	@echo Starting container with the following settings: OISP_DEVICE_ACTIVATION_CODE="${OISP_DEVICE_ACTIVATION_CODE}" \
 		OISP_DEVICE_ID="${OISP_DEVICE_ID}"
-	/bin/bash -c "docker run -d -t -i --network=host \
+	@/bin/bash -c "docker run -d -t -i --rm --network=host \
 					--env OISP_DEVICE_ACTIVATION_CODE=${OISP_DEVICE_ACTIVATION_CODE} \
 					--env OISP_DEVICE_ID=${OISP_DEVICE_ID} \
 					--env	OISP_DEVICE_NAME=${OISP_DEVICE_NAME} \
