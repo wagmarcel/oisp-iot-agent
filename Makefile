@@ -9,6 +9,7 @@ CONTAINER_NAME=oisp-iot-agent
 build:
 	@$(call msg,"Building oisp-agent ...");
 	@/bin/bash -c "docker build . -t ${IMAGE_NAME}"
+	@make -C container build
 
 start:
 	@$(call msg,"Starting oisp-agent container...");
@@ -25,10 +26,12 @@ stop:
 	@$(call msg,"Stopping oisp-agent ...");
 	@/bin/bash -c "docker stop ${CONTAINER_NAME}"
 
-clean:
+
+clean: stop
 	@$(call msg,"Cleaning ...");
-	@/bin/bash -c "docker rm ${CONTAINER_NAME}"
 	@/bin/bash -c "docker rmi ${IMAGE_NAME}"
+	
+
 
 #----------------------------------------------------------------------------------------------------------------------
 # helper functions

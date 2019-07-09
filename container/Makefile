@@ -19,7 +19,7 @@ stop:
 	@$(call msg,"Stopping testsensor ...");
 	@/bin/bash -c "docker stop ${CONTAINER_NAME}"
 
-clean:
+clean: stop
 	@$(call msg,"Cleaning ...");
 	@/bin/bash -c "docker rmi ${IMAGE_NAME}"
 
