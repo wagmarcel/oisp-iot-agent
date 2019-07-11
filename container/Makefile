@@ -23,6 +23,11 @@ clean: stop
 	@$(call msg,"Cleaning ...");
 	@/bin/bash -c "docker rmi ${IMAGE_NAME}"
 
+test: build
+	(cd scripts/getagentenv; \
+	npm install @open-iot-service-platform/oisp-cli; \
+	./setupCLIConfigFromLocal.sh;)
+	
 #----------------------------------------------------------------------------------------------------------------------
 # helper functions
 #----------------------------------------------------------------------------------------------------------------------
