@@ -16,7 +16,7 @@ USER agent
 RUN npm --force cache clean
 
 RUN npm install
-
+RUN ls /app/config
 EXPOSE 1884
 EXPOSE 8000
 EXPOSE 41234

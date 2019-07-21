@@ -12,27 +12,25 @@
 ROOTDIR=/app
 MNTDIR=/volume
 
-if [ ! -d ${MNTDIR}/config ];then
-  mkdir ${MNTDIR}/config
-fi
+
+echo Marcel145
+ls -la /app
+ls -la /app/config
+ls -la /volume/config
+echo Marcel146
 if [ ! -d ${MNTDIR}/data ]; then
   mkdir ${MNTDIR}/data
 fi
-if [ ! -f ${MNTDIR}/config/index.js ];then
-  cp ${ROOTDIR}/config/index.js ${MNTDIR}/config
-fi
-if [ ! -f ${MNTDIR}/config/config.json ];then
-  cp ${ROOTDIR}/config/config.json ${MNTDIR}/config
-fi
-if [ ! -f ${MNTDIR}/data/devie.json ];then
+if [ ! -f ${MNTDIR}/data/device.json ];then
   cp ${ROOTDIR}/data/device.json ${MNTDIR}/data
 fi
 
-rm -rf ${ROOTDIR}/config ${ROOTDIR}/data
-ln -s ${MNTDIR}/config ${ROOTDIR}/config 
-ln -s ${MNTDIR}/data ${ROOTDIR}/data 
-  
+rm -rf ${ROOTDIR}/data
+#ln -s ${MNTDIR}/config ${ROOTDIR}/config
+ln -s ${MNTDIR}/data ${ROOTDIR}/data
+
 # activate if needed
 (cd ${ROOTDIR}/container/scripts; ./onboard.sh)
 
+echo Now starting agent
 (cd ${ROOTDIR}; ./oisp-agent.js)

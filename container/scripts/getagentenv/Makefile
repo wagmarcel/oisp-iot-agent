@@ -3,28 +3,18 @@
 # targets
 #----------------------------------------------------------------------------------------------------------------------
 
-IMAGE_NAME="oisp/oisp-testsensor"
-CONTAINER_NAME="oisp-testsensor"
-DOCKERFILE_NAME="Dockerfile.testsensor"
+SHELL:=/bin/bash
+CLIDIR:=node_modules/@open-iot-service-platform/oisp-cli/
+CLIBIN:=${CLIDIR}/oisp-cli.js
 
-build:
-	@$(call msg,"Building testsensor ...");
-	@/bin/bash -c "docker build . -t ${IMAGE_NAME} -f ${DOCKERFILE_NAME}"
-
-start:
-	@$(call msg,"Starting testsensor ...");
-	@/bin/bash -c "docker run -d -t -i --rm --network=host --name ${CONTAINER_NAME} ${IMAGE_NAME}"
-
-stop:
-	@$(call msg,"Stopping testsensor ...");
-	@/bin/bash -c "docker stop ${CONTAINER_NAME}" || echo "${CONTAINER_NAME} cannot be stoped"
-
-clean: stop
-	@$(call msg,"Cleaning ...");
-	@/bin/bash -c "docker rmi ${IMAGE_NAME}" || echo "${IMAGE_NAME} cannot be deleted"
-
-test: build start
-
+build: .init
+	@$(call msg,"Building oisp-agent ...");
+	@$(call msg,"Install environment for oisp-cli ...");
+	@mkdir -p node_modules
+	@npm install @open-iot-service-platform/oisp-cli
+	#steal configuration from agent
+	@echo \{\"admin_file\": \"admin.js\",  > ${CLIDIR}/config/config.json
+	@tail -n +2 ${ROOTDIR}/config/config.json >> ${CLIDIR}/config/config.json
 
 #----------------------------------------------------------------------------------------------------------------------
 # helper functions

@@ -8,7 +8,6 @@
 # - OISP_DEVICE_ID the device id for activation
 # - OISP_DEVICE_NAME the device name for activation
 # - OISP_FORCE_REACTIVATION if set to "true" it will initialize the device and activate again with the code in OISP_ACTIVATION_CODE
-# - OISP_AGENT_CONFIG JSON configuration of agent connectivity
 
 # How can I check whether device is activated? There is only a test for connectivity
 # For the time being, it checks whether device has a token.
@@ -29,19 +28,16 @@ if [ "$TOKEN" = "\"\"" ] || [ "$TOKEN" = "false" ] || [ ! -z "$OISP_FORCE_REACTI
     if [ ! -z "$OSIP_DEVICE_ACTIVATION_CODE" ]; then
         fail "No Device Activation Code given but no token found or reactivation is forced"
     fi
+    ${ADMIN} test || fail "No connectivity to OISP"
     ${ADMIN} initialize
     if [ ! -z "$OISP_DEVICE_ID" ]; then
         ${ADMIN} set-device-id $OISP_DEVICE_ID
     else
         fail "No device id given"
     fi
-    
+
     if [ ! -z "$OISP_DEVICE_NAME" ]; then
         ${ADMIN} set-device-name $OISP_DEVICE_NAME
     fi
-    ${ADMIN} activate $OISP_DEVICE_ACTIVATION_CODE
-fi
-
-if [ ! -z "$OISP_AGENT_CONFIG" ]; then
-    echo $OISP_AGENT_CONFIG > ${CONFDIR}/config.json
+    ${ADMIN} activate $OISP_DEVICE_ACTIVATION_CODE || fail "Could not activate"
 fi
