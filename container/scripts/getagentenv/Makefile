@@ -9,13 +9,16 @@ CLIBIN:=${CLIDIR}/oisp-cli.js
 ROOTDIR:=../../../
 
 build:
-	@$(call msg,"Building oisp-agent ...");
-	@$(call msg,"Install environment for oisp-cli ...");
+	@$(call msg,"Install environment for oisp-cli ...")
 	@mkdir -p node_modules
 	@npm install @open-iot-service-platform/oisp-cli
 	#steal configuration from agent
 	@echo \{\"admin_file\": \"admin.js\",  > ${CLIDIR}/config/config.json
 	@tail -n +2 ${ROOTDIR}/config/config.json >> ${CLIDIR}/config/config.json
+
+clean:
+	@$(call msg,"Cleaning environent for oisp-cli ...")
+	rm -f testconfig.sh
 
 #----------------------------------------------------------------------------------------------------------------------
 # helper functions

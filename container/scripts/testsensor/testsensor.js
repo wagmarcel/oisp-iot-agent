@@ -34,7 +34,7 @@ var registerComponent = function(componentType, name) {
     client.send(comp_message, 0, comp_message.length, PORT, HOST, function(err, response) {
         if (err) console.log("Error:", err);
         client.close();
-        console.log("send " + JSON.stringify(component));
+        console.log("registering " + JSON.stringify(component));
     });
 }
 
@@ -55,7 +55,8 @@ var getRandomInteger = function(min, max) {
 //first register the temp component
 registerComponent(componentType, componentName);
 
-setInterval(function() {
+setTimeout(
+function(){ setInterval(function() {
     //to be on the save side re-register. Agent will realize if already existing
     registerComponent(componentType, componentName);
     var telemetry = { "n": componentName, "v": tempValue };
@@ -65,8 +66,9 @@ setInterval(function() {
         var change = getRandomInteger(100, -100)
         tempValue += change / 100.0
         numSamples++;
-        if (testSamples && numSamples > testSamples) {
+        if (testSamples && numSamples >= testSamples) {
+            console.log("Maximal number of testsamples reached. Terminating!")
             process.exit(0);
         }
     })
-}, 5 * 1000)
+}, 5 * 1000)}, 5000 )

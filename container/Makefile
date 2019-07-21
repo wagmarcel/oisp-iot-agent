@@ -3,9 +3,11 @@
 # targets
 #----------------------------------------------------------------------------------------------------------------------
 
+SHELL:=/bin/bash
 IMAGE_NAME="oisp/oisp-testsensor"
 CONTAINER_NAME="oisp-testsensor"
 DOCKERFILE_NAME="Dockerfile.testsensor"
+TEST_SAMPLE_NUM=10
 
 build:
 	@$(call msg,"Building testsensor ...");
@@ -13,7 +15,9 @@ build:
 
 start:
 	@$(call msg,"Starting testsensor ...");
-	@/bin/bash -c "docker run -d -t -i --rm --network=host --name ${CONTAINER_NAME} ${IMAGE_NAME}"
+	@/bin/bash -c "docker run -it --rm --network=host \
+		--env TEST_SAMPLES=${TEST_SAMPLE_NUM} \
+		--name ${CONTAINER_NAME} ${IMAGE_NAME}"
 
 stop:
 	@$(call msg,"Stopping testsensor ...");
@@ -23,6 +27,7 @@ stop:
 clean: stop
 	@$(call msg,"Cleaning ...");
 	@/bin/bash -c "docker rmi ${IMAGE_NAME}" || echo "${IMAGE_NAME} cannot be deleted"
+	make -C scripts/getagentenv clean
 
 test: build start
 
