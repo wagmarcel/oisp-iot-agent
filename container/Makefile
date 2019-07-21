@@ -18,6 +18,7 @@ start:
 stop:
 	@$(call msg,"Stopping testsensor ...");
 	@/bin/bash -c "docker stop ${CONTAINER_NAME}" || echo "${CONTAINER_NAME} cannot be stoped"
+	@docker rm  -f ${CONTAINER_NAME} || echo "${CONTAINER_NAME} cannot be removed."
 
 clean: stop
 	@$(call msg,"Cleaning ...");

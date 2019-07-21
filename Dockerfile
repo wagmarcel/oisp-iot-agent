@@ -7,6 +7,7 @@ RUN addgroup -g 1001 -S agent && \
 
 RUN apk update && apk add bash jq
 RUN mkdir /volume && chown -R agent /volume && chown -R agent /app && chmod u+x /app/container/scripts/*
+RUN cp -rf /app/config /volume && rm -f /app/config/config.json && ln -s /volume/config/config.json /app/config/config.json
 
 WORKDIR /app
 
@@ -16,7 +17,6 @@ USER agent
 RUN npm --force cache clean
 
 RUN npm install
-RUN ls /app/config
 EXPOSE 1884
 EXPOSE 8000
 EXPOSE 41234

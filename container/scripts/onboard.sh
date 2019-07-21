@@ -39,5 +39,6 @@ if [ "$TOKEN" = "\"\"" ] || [ "$TOKEN" = "false" ] || [ ! -z "$OISP_FORCE_REACTI
     if [ ! -z "$OISP_DEVICE_NAME" ]; then
         ${ADMIN} set-device-name $OISP_DEVICE_NAME
     fi
-    ${ADMIN} activate $OISP_DEVICE_ACTIVATION_CODE || fail "Could not activate"
+    echo ${ADMIN} activate $OISP_DEVICE_ACTIVATION_CODE
+    ${ADMIN} activate $OISP_DEVICE_ACTIVATION_CODE || fail "Could not activate device"
 fi

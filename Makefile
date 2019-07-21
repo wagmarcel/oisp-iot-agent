@@ -28,12 +28,14 @@ start:
 stop:
 	@$(call msg,"Stopping oisp-agent ...");
 	@docker stop ${CONTAINER_NAME} || echo "${CONTAINER_NAME} cannot be stopped."
+	@docker rm  -f ${CONTAINER_NAME} || echo "${CONTAINER_NAME} cannot be removed."
 	@make -C container stop
 
 
 clean: stop
 	@$(call msg,"Cleaning ...");
-	@/bin/bash -c "docker rmi ${IMAGE_NAME}" || echo "${IMAGE_NAME} cannot be deleted"
+	@docker rm -f ${CONTAINER_NAME}
+	@/bin/bash -c "docker rmi -f ${IMAGE_NAME}" || echo "${IMAGE_NAME} cannot be deleted"
 	@rm -f .prepare-testconfig
 
 .prepare-testconfig:

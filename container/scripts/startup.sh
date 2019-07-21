@@ -30,7 +30,7 @@ rm -rf ${ROOTDIR}/data
 ln -s ${MNTDIR}/data ${ROOTDIR}/data
 
 # activate if needed
-(cd ${ROOTDIR}/container/scripts; ./onboard.sh)
+(cd ${ROOTDIR}/container/scripts; ./onboard.sh) || exit 1
 
 echo Now starting agent
-(cd ${ROOTDIR}; ./oisp-agent.js)
+(cd ${ROOTDIR}; ./oisp-agent.js) || exit 1

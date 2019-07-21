@@ -6,8 +6,9 @@
 SHELL:=/bin/bash
 CLIDIR:=node_modules/@open-iot-service-platform/oisp-cli/
 CLIBIN:=${CLIDIR}/oisp-cli.js
+ROOTDIR:=../../../
 
-build: .init
+build:
 	@$(call msg,"Building oisp-agent ...");
 	@$(call msg,"Install environment for oisp-cli ...");
 	@mkdir -p node_modules
