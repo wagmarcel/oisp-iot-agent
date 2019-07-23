@@ -3,14 +3,19 @@
 # targets
 #----------------------------------------------------------------------------------------------------------------------
 
-IMAGE_NAME=oisp/oisp-iot-agent
-CONTAINER_NAME=oisp-iot-agent
-CONFIGFILE=container/scripts/getagentenv/testconfig.sh
+IMAGE_NAME = oisp/oisp-iot-agent
+CONTAINER_NAME = oisp-iot-agent
+GETAGENTENVDIR = container/scripts/getagentenv
+GETSAMPLES = ./getSamples.sh
+CONFIGFILE = ${GETAGENTENVDIR}/testconfig.sh
+
 DEVICENAME:=agenttestdevice
 SHELL := /bin/bash
 OISP_PREP_FILE ?= ../tests/oisp-prep-only.conf
 USERNAME = $(shell cat ${OISP_PREP_FILE} | jq .username)
 PASSWORD = $(shell cat ${OISP_PREP_FILE} | jq .password)
+ACCOUNTID = $(shell cat ${OISP_PREP_FILE} | jq .accountId)
+COMPONENT_NAME = "temp"
 
 build:
 	@$(call msg,"Building oisp-agent ...");
@@ -45,11 +50,12 @@ clean: stop
 
 .prepare-testconfig:
 		@cp config/config.json.template config/config.json
-		cd container/scripts/getagentenv && make build && source ./getActivationCode.sh ${USERNAME} ${PASSWORD} ${DEVICENAME}
+		cd ${GETAGENTENVDIR} && make build && source ./getActivationCode.sh ${USERNAME} ${PASSWORD} ${DEVICENAME}
 		@touch $@
 
 test: .prepare-testconfig build start
-	@make -C container test
+	@make COMPONENT_NAME=${COMPONENT_NAME} -C container test
+	@source ${CONFIGFILE} && cd ${GETAGENTENVDIR} && ${GETSAMPLES} ${ACCOUNTID} ${DEVICENAME} ${COMPONENT_NAME}
 
 #----------------------------------------------------------------------------------------------------------------------
 # helper functions
