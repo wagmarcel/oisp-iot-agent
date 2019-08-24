@@ -49,7 +49,8 @@ var testSamples;
 var sensorSpecs = [];
 
 if (fs.existsSync(specsFileName)) {
-    sensorSpecs = require(specsFileName);
+    var jsondata = fs.readFileSync(specsFileName);
+    sensorSpecs = JSON.parse(jsondata);
     logger.info("SensorSpec found in /etc/oisp. Loaded: " + JSON.stringify(sensorSpecs));
 }
 else {
@@ -107,6 +108,9 @@ sensorSpecs.forEach(function(spec){
 	    //to be on the save side re-register. Agent will realize if already existing
 	    registerComponent(spec);
 	    var value = values[spec.name];
+	    if (spec.type === "string") {
+		value += Math.round(Math.random() * 100000000);
+		}
 	    var telemetry = { "n": spec.componentName, "v": value };
 	    sendObservation(spec, telemetry, function(err, bytes) {
 		if (err) logger.error("Error:" + err);
