@@ -15,7 +15,7 @@ RUN export http_proxy=$HTTP_PROXY && echo $http_proxy && apt-get install -y soft
 RUN apt-get install -y curl build-essential libssl-dev libupm-dev python-upm python3-upm upm-examples python
     
 ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 4.2.4
+ENV NODE_VERSION 6.17.1
 
 RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.30.1/install.sh | bash
 RUN source $NVM_DIR/nvm.sh \
@@ -26,7 +26,7 @@ RUN source $NVM_DIR/nvm.sh \
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
-ADD ./scripts/testsensor /app
+ADD ./scripts/upmth02sensor /app
 RUN addgroup --gid 1001 agent && \
     adduser --uid 1001 agent --gid 1001
 
@@ -34,13 +34,13 @@ RUN chown -R agent /app
 
 WORKDIR /app
 
-RUN npm --force cache clean && npm install && npm install mraa -g && npm install jsupm_th02 -g
+RUN npm --force cache clean && npm install && npm install mraa  && npm install jsupm_th02 && npm install child_process
 
-USER agent
+#USER agent # unfortunately the i2c device can only be read as root
 
 EXPOSE 1884
 EXPOSE 8000
 EXPOSE 41234
 EXPOSE 7070
 
-ENTRYPOINT node /app/testsensor.js
+ENTRYPOINT node /app/upmth02sensor.js

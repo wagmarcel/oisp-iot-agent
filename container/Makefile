@@ -4,14 +4,18 @@
 #----------------------------------------------------------------------------------------------------------------------
 
 SHELL:=/bin/bash
-IMAGE_NAME="oisp/oisp-testsensor"
+IMAGE_NAME_TESTSENSOR="oisp/oisp-testsensor"
+IMAGE_NAME_UPMTH02SENSOR="oisp/oisp-upmth02sensor"
 CONTAINER_NAME="oisp-testsensor"
-DOCKERFILE_NAME="Dockerfile.testsensor"
+DOCKERFILE_TESTSENSOR="Dockerfile.testsensor"
+DOCKERFILE_UPMTH02SENSOR="Dockerfile.upmth02sensor"
 TEST_SAMPLE_NUM=10
 
 build:
 	@$(call msg,"Building testsensor ...");
-	@/bin/bash -c "docker build . -t ${IMAGE_NAME} -f ${DOCKERFILE_NAME}"
+	@/bin/bash -c "docker build . -t ${IMAGE_NAME_TESTSENSOR} -f ${DOCKERFILE_TESTSENSOR} --build-arg HTTP_PROXY --build-arg HTTPS_PROXY"
+	@$(call msg,"Building upmth02sensor ...");
+	@/bin/bash -c "docker build . -t ${IMAGE_NAME_UPMTH02SENSOR} -f ${DOCKERFILE_UPMTH02SENSOR} --build-arg HTTP_PROXY --build-arg HTTPS_PROXY"
 
 start:
 	@$(call msg,"Starting testsensor ...");

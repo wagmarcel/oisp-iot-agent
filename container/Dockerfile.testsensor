@@ -1,5 +1,9 @@
 FROM node:8.16.0-alpine
 
+ARG HTTP_RPOXY
+ARG HTTPS_PROXY
+
+RUN echo hello && echo configured http/https proxy: $HTTP_PROXY/$HTTPS_PROXY
 ADD ./scripts/testsensor /app
 
 RUN addgroup -g 1001 -S agent && \
