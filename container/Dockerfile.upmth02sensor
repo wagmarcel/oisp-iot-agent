@@ -8,12 +8,11 @@ RUN echo configured http/https proxy: $HOSNAME ${HTTP_PROXY}/${HTTPS_PROXY}
 
 RUN if [ ! -z "$HTTP_PROXY" ]; then echo Acquire::http::proxy \"$HTTP_PROXY\"\; >> /etc/apt/apt.conf; fi
 RUN if [ ! -z "$HTTPS_PROXY" ]; then echo Acquire::https::proxy \"$HTTPS_PROXY\"\; >> /etc/apt/apt.conf; fi
-RUN cat /etc/apt/apt.conf
 
 RUN apt-get update
 RUN export http_proxy=$HTTP_PROXY && echo $http_proxy && apt-get install -y software-properties-common && add-apt-repository ppa:mraa/mraa && apt-get update
 RUN apt-get install -y curl build-essential libssl-dev libupm-dev python-upm python3-upm upm-examples python
-    
+
 ENV NVM_DIR /usr/local/nvm
 ENV NODE_VERSION 6.17.1
 
@@ -36,7 +35,7 @@ WORKDIR /app
 
 RUN npm --force cache clean && npm install && npm install mraa  && npm install jsupm_th02 && npm install child_process
 
-#USER agent # unfortunately the i2c device can only be read as root
+USER agent
 
 EXPOSE 1884
 EXPOSE 8000

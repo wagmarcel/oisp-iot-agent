@@ -4,9 +4,9 @@
 #----------------------------------------------------------------------------------------------------------------------
 
 SHELL:=/bin/bash
-IMAGE_NAME_TESTSENSOR="oisp/oisp-testsensor"
-IMAGE_NAME_UPMTH02SENSOR="oisp/oisp-upmth02sensor"
-CONTAINER_NAME="oisp-testsensor"
+IMAGE_NAME_TESTSENSOR="oisp/testsensor"
+IMAGE_NAME_UPMTH02SENSOR="oisp/upmth02sensor"
+CONTAINER_NAME="testsensor"
 DOCKERFILE_TESTSENSOR="Dockerfile.testsensor"
 DOCKERFILE_UPMTH02SENSOR="Dockerfile.upmth02sensor"
 TEST_SAMPLE_NUM=10
