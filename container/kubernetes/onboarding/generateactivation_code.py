@@ -39,6 +39,7 @@ import yaml
 def oisp_activation_code_generator(oisp_url):
     """Generates Activation Code"""
     try:
+        print(oisp_url)
         client = oisp.Client(oisp_url)
         client.auth(username, password)
         accounts = client.get_accounts()
