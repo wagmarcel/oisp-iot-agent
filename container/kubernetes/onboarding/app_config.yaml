@@ -1,2 +1,2 @@
-BASE_OISP_INSTANCE: <OISP base url>
-API_VERSION:   <vX/api>
+BASE_OISP_INSTANCE: https://latest.oisp.info
+API_VERSION:   v1/api
