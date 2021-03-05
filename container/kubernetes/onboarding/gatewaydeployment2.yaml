@@ -1,0 +1,180 @@
+version: 1.0
+namespace: oisp-devices
+CreateDeployments:
+  - ApplicationName: onboardedtest1
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: dffcbc802d7bc69c1bb8a345129c5f2f66a84618
+
+  - ApplicationName: onboardedtest2
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: e0e7939c990af5f89c6d0c1fda34926a415cd3fb
+
+  - ApplicationName: onboardedtest3
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: e0e7939c990af5f89c6d0c1fda34926a415cd3fb
+
+  - ApplicationName: onboardedtest4
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: e0e7939c990af5f89c6d0c1fda34926a415cd3fb
+
+  - ApplicationName: onboardedtest5
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: e0e7939c990af5f89c6d0c1fda34926a415cd3fb
+
+  - ApplicationName: onboardedtest6
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: e0e7939c990af5f89c6d0c1fda34926a415cd3fb
+
+  - ApplicationName: onboardedtest7
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: e0e7939c990af5f89c6d0c1fda34926a415cd3fb
+
+  - ApplicationName: onboardedtest8
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: e0e7939c990af5f89c6d0c1fda34926a415cd3fb
+
+  - ApplicationName: onboardedtest9
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: e0e7939c990af5f89c6d0c1fda34926a415cd3fb
+
+  - ApplicationName: onboardedtest10
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: e0e7939c990af5f89c6d0c1fda34926a415cd3fb
+
+  - ApplicationName: onboardedtest11
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: e0e7939c990af5f89c6d0c1fda34926a415cd3fb
+
+  - ApplicationName: onboardedtest12
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: e0e7939c990af5f89c6d0c1fda34926a415cd3fb
+
+UpdateDeployments:
+  - ApplicationName: onboardedtest5
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: 5f2a74ad33bfd9d61ea32b3334aa9365b9fe0f09
+  - ApplicationName: onboardedtest6
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: e0e7939c990af5f89c6d0c1fda34926a415cd3fb
+
+  - ApplicationName: onboardedtest7
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: e0e7939c990af5f89c6d0c1fda34926a415cd3fb
+
+DeleteDeployments:
+  - ApplicationName: onboardedtest5
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: dffcbc802d7bc69c1bb8a345129c5f2f66a84618
+
+  - ApplicationName: onboardedtest6
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: e0e7939c990af5f89c6d0c1fda34926a415cd3fb
+
+  - ApplicationName: onboardedtest7
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: dffcbc802d7bc69c1bb8a345129c5f2f66a84618
+
+  - ApplicationName: onboardedtest8
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: dffcbc802d7bc69c1bb8a345129c5f2f66a84618
+
+  - ApplicationName: onboardedtest9
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: e0e7939c990af5f89c6d0c1fda34926a415cd3fb
+
+  - ApplicationName: onboardedtest10
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: e0e7939c990af5f89c6d0c1fda34926a415cd3fb
+
+  - ApplicationName: onboardedtest11
+    NodeName: localhost
+    ToolVersion: 1.0
+    DeploymentConfig:
+        URL: https://github.com/wagmarcel/Gateway-Deployment.git
+        Directory: deploy-testsensor
+        GitTag: 5f2a74ad33bfd9d61ea32b3334aa9365b9fe0f09
+
