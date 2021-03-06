@@ -1,2 +1,2 @@
-BASE_OISP_INSTANCE: https://latest.oisp.info
+BASE_OISP_INSTANCE: http://frontend:4001
 API_VERSION:   v1/api

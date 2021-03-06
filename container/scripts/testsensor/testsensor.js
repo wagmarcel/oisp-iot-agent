@@ -26,21 +26,22 @@ const logger = winston.createLogger({
 var default_port = 41234;
 var default_host = '127.0.0.1';
 var default_sensorSpecs = [
-    {
-	agents: [
-	    {
-		port: default_port,
-		host: default_host
-	    }
-	],
-	name: "tempSensor",
-	componentName: "temp",
-	componentType: "temperature.v1.0",
-	type: "number",
-  sleep: 5000,
-	sigma: 0.3,
-	startValue: 20
-    }
+	{
+		agents: [
+			{
+				port: default_port,
+				host: default_host
+			}
+		],
+		name: "tempSensor",
+		componentName: "temp",
+		componentType: "temperature.v1.0",
+		type: "number",
+		sleep: 5000,
+		modus: "incremental",
+		sigma: 0.3,
+		startValue: 20
+	}
 ]
 
 var values = {};
@@ -69,7 +70,7 @@ var registerComponent = function(spec) {
       return;
     }
     var component = { "t": spec.componentType, "n": spec.componentName }
-    var comp_message = new Buffer(JSON.stringify(component));
+    var comp_message = new Buffer.from(JSON.stringify(component));
     spec.agents.forEach(function(agent){
 	var client = dgram.createSocket('udp4');
 	logger.verbose("Registring component: " + JSON.stringify(component) + " at url " + agent.host + ":" + agent.port);
@@ -81,7 +82,7 @@ var registerComponent = function(spec) {
 }
 
 var sendObservation = function(spec, data, cb) {
-    var message = new Buffer(JSON.stringify(data));
+    var message = new Buffer.from(JSON.stringify(data));
     spec.agents.forEach(function(agent) {
 	var client = dgram.createSocket('udp4');
 	client.send(message, 0, message.length, agent.port, agent.host, function(err, response) {
@@ -118,15 +119,19 @@ sensorSpecs.forEach(function(spec){
 	    registerComponent(spec);
 	    var value = values[spec.name];
 	    if (spec.type === "string") {
-		value += Math.round(Math.random() * 100000000);
+			value += Math.round(Math.random() * 100000000);
 		}
 	    var telemetry = { "n": spec.componentName, "v": value };
 	    sendObservation(spec, telemetry, function(err, bytes) {
 		if (err) logger.error("Error:" + err);
-		logger.info(telemetry)
+			logger.info(telemetry)
 		if (spec.type === "number") {
-		    var change = PD.rnorm(1, 0, spec.sigma);
-		    value += change[0];
+			var change = spec.sigma;
+			if (spec.modus !== "incremental") {
+			var changes = PD.rnorm(1, 0, spec.sigma);
+			change = changes[0];
+			}
+		    value += change;
 		    values[spec.name] = value;
 		}
 		numSamples++;
